@@ -44,21 +44,10 @@ else
 ccflags-y += -DBF_PINCTL
 endif
 
-ifndef CONFIG_MTK_PLATFORM
-# most mediatek platform will define CONFIG_MTK_PLATFORM, if your platform is mediatek but not define CONFIG_MTK_PLATFORM, please ignore the next line error
-$(error "************* platform is not mediatek, please set BL_PLATFORM as PLATFORM_SPRD or PLATFORM_QCOM *************")
-else
-$(warning "CONFIG_MTK_PLATFORM is $(CONFIG_MTK_PLATFORM)")
-ifeq ($(CONFIG_MTK_PLATFORM), "mt6739")
+
+
 BL_PLATFORM := PLATFORM_MT6739
-endif
-ifeq ($(CONFIG_MTK_PLATFORM), "mt6797")
-#for mt6797  Rx_DMA address range error in 4G mode,dma:0
-ifeq ($(strip $(TEE_PLATFORM)), REE)
-ccflags-y += -DUSE_SPI1_4GB_TEST  
-endif
-endif
-endif
+
 endif
 
 ifeq ($(strip $(BL_PLATFORM)), PLATFORM_MTK)
